@@ -8,7 +8,9 @@ find one pleasing enough!
 * [GLFW](https://www.glfw.org)
 
 ## Screenshots
-Coming soon™
-
+![Imgur](https://i.imgur.com/KXtIU6o.png)
+![Imgur](https://i.imgur.com/Wns0OR8.png)
+![Imgur](https://i.imgur.com/7TZJGhP.png)
+![Imgur](https://i.imgur.com/X32De8v.png)
 ## TODO
 Julia sets maybe??
