@@ -16,12 +16,12 @@ int main(void)
 {
     try {
         init();
-    } catch (std::exception e) {
+    } catch (std::runtime_error e) {
         printf("Exception thrown during initialisation:\n %s", e.what());
         return 1;
     }
 
     window::display();
-    
+
     return 0;
 }

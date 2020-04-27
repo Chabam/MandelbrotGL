@@ -22,10 +22,10 @@ int window::max_iter = 100;
 window::bounds window::lower_bounds = default_lower_bounds;
 window::bounds window::upper_bounds = default_upper_bounds;
 
-void resize_callback(GLFWwindow* window, int width, int height) {
+void resize_callback(GLFWwindow*, int width, int height) {
     window::width = width;
     window::height = height;
-    
+
     glUniform2f(shader::window_dim_uniform, window::width, window::height);
     glViewport(0, 0, window::width, window::height);
 }
@@ -39,7 +39,7 @@ void zoom(double zoom_factor) {
     double scaled_lower_y = window::lower_bounds.y * zoom_factor;
     double scaled_upper_x = window::upper_bounds.x * zoom_factor;
     double scaled_upper_y = window::upper_bounds.y * zoom_factor;
-    
+
     double current_center_x = get_center(window::upper_bounds.x, window::lower_bounds.x);
     double current_center_y = get_center(window::upper_bounds.y, window::lower_bounds.y);
     double new_center_x = get_center(scaled_upper_x, scaled_lower_x);
@@ -56,7 +56,7 @@ void zoom(double zoom_factor) {
 
 void move(direction dir) {
     double amount = dir == DOWN || dir == LEFT ? -step : step;
-    
+
     if (dir == UP || dir == DOWN) {
         amount *= (window::upper_bounds.y - window::lower_bounds.y);
         window::upper_bounds.y += amount;
@@ -69,7 +69,7 @@ void move(direction dir) {
 
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void key_callback(GLFWwindow* window, int key, int, int action, int) {
     if (action != GLFW_PRESS && action != GLFW_REPEAT) return;
 
     switch (key) {
@@ -116,7 +116,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void window::init(int width, int height, const char* title) {
     if (!glfwInit())
-        throw std::exception("Could not initialize GLWF!");
+        throw std::runtime_error("Could not initialize GLWF!");
 
     window::width = width;
     window::height = height;
@@ -124,9 +124,9 @@ void window::init(int width, int height, const char* title) {
     window::ref = glfwCreateWindow(width, height, title, NULL, NULL);
     if (!window::ref) {
         glfwTerminate();
-        throw std::exception("Could not create a GLWF window!");
+        throw std::runtime_error("Could not create a GLWF window!");
     }
-    
+
     // Sizing
     glfwSetWindowSizeCallback(window::ref, resize_callback);
     glfwSetWindowAspectRatio(window::ref, 7, 4);

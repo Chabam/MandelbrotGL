@@ -9,7 +9,7 @@ GLuint shader::max_iter_uniform;
 void shader::init(void)
 {
     if (glewInit() != GL_NO_ERROR)
-        throw std::exception("Could not initialize GLEW!");
+        throw std::runtime_error("Could not initialize GLEW!");
 
     GLuint program_uid = glCreateProgram();
     GLuint vert_uid = shader::create_from_file("src/shaders/shader.vert", GL_VERTEX_SHADER);
@@ -24,7 +24,7 @@ void shader::init(void)
     glGetProgramiv(program_uid, GL_LINK_STATUS, &success);
     if (success != GL_TRUE) {
         std::string error_message = std::string("Program linking failed");
-        throw std::exception(error_message.c_str());
+        throw std::runtime_error(error_message.c_str());
     }
 
     glUseProgram(program_uid);
@@ -51,7 +51,7 @@ GLuint shader::create_from_file(const char* path, GLenum type)
 
     if (!file.is_open()) {
         std::string error_message = std::string("File not found: ") + path + "\n";
-        throw std::exception(error_message.c_str());
+        throw std::runtime_error(error_message.c_str());
     }
 
     while (std::getline(file, line)) {
@@ -74,7 +74,7 @@ GLuint shader::create_from_file(const char* path, GLenum type)
         char infoLog[1024];
         glGetShaderInfoLog(shader_uid, 1024, NULL, infoLog);
         std::string error_message = std::string("Shader compilation failed: ") + path + "\n" + infoLog + "\n";
-        throw std::exception(error_message.c_str());
+        throw std::runtime_error(error_message.c_str());
     }
 
     return shader_uid;

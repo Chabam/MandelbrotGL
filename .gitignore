@@ -3,3 +3,4 @@ include/
 MandelbrotGL.vcxproj
 MandelbrotGL.vcxproj.filters
 MandelbrotGL.vcxproj.user
+.vscode
